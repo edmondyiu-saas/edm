@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="db_image">
+    <db_image action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <category>cms</category>
+        <format>png</format>
+        <height>28</height>
+        <image>794d41ccdbcaf7003fa45fa0cf9619d3</image>
+        <name>eEvent_icon_youtube.png</name>
+        <size_bytes>706</size_bytes>
+        <sys_class_name>db_image</sys_class_name>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-10 03:00:21</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>402d9448db4af7003fa45fa0cf961937</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>eEvent_icon_youtube.png</sys_name>
+        <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+        <sys_update_name>db_image_402d9448db4af7003fa45fa0cf961937</sys_update_name>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-06-10 06:30:30</sys_updated_on>
+        <thumbnail/>
+        <width>28</width>
+    </db_image>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color>#b7b7b7</average_image_color>
+        <chunk_size_bytes>734003</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>image/png</content_type>
+        <encryption_context/>
+        <file_name>image</file_name>
+        <image_height>28</image_height>
+        <image_width>28</image_width>
+        <size_bytes>706</size_bytes>
+        <size_compressed>729</size_compressed>
+        <state/>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-10 06:30:30</sys_created_on>
+        <sys_id>794d41ccdbcaf7003fa45fa0cf9619d3</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-06-10 06:30:30</sys_updated_on>
+        <table_name>ZZ_YYdb_image</table_name>
+        <table_sys_id>402d9448db4af7003fa45fa0cf961937</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>H4sIAAAAAAAAAA==</data>
+        <length>16</length>
+        <position>0</position>
+        <sys_attachment display_value="image" sys_id="794d41ccdbcaf7003fa45fa0cf9619d3">794d41ccdbcaf7003fa45fa0cf9619d3</sys_attachment>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-10 06:30:30</sys_created_on>
+        <sys_id>b94d41ccdbcaf7003fa45fa0cf9619d3</sys_id>
+    </sys_attachment_doc>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>AcICPf2JUE5HDQoaCgAAAA1JSERSAAAAHAAAABwIBgAAAHIN35QAAAABc1JHQgCuzhzpAAAABGdBTUEAALGPC/xhBQAAAmxJREFUSEu9lr+qGkEUxncXBQsLCRbGyvIWBmyS5sJNSvWKfQL29xnyAHmG2weSXoxaqhCQpMwtUlhYiLGQVBaCgvm+mdnV2Z1ZN5slP1jPnMPufHPmn8d1EjAcDl+eTqeO67p3cKuwzxlH7BfMGv4M7UG73f7OeByxgqPR6C06eo8O6yoUC959wrsfWq3WZxWKYBQcj8c3+PgRzdcy8tdMD4fDQ7fb/an8gIggpq8N8xEjfSYj6cCAf8P0MM1DGZFoghSD0BflZgKE7y9FA8F+v3+Ty+W+/mtmYZip53m3zWZTTK8noiCfzz9mLUbYp9oPApEhdyPMJ7ZNIHNhC4VCYBnb7/fCp/XbMbzj7hWCWLsfGIm29dlhrVZzKpVKIJiE3W7nLJdLZ7vdqogEWT5hLV+4PNQQ+6biARTjk5b5fB7JGqKvPIh1lK9RLBZVKx3lclm1zkCw4+GH11UEf73CLBaLJOtlBMndcZdWpatjWzeuEaeLwnFYZqjKKRUXcZhrG2W1WjmTycTZbDYqomP6nlrBOUxDqVQSj4nj8ahaOlxD/sVEiFsnijQaDfHY1tokSC1muJaujm2EPCr1et2amY/l+zUznClHw5YhhZJcBKbvsYYzbpqB8jVsmyEJzC580xAkN7BebYTZ8AAzI//+9NuEHfuPnxEtB8vjcwnE5NVG59rlnRHny5tAdAKTtqS4xhRib9gIziGm9AFpsyzIFPbJ+ka5Z0H1j9yTXqb0Losp7aZh7YER3WeRKftgX+EiKnK18QXsuls0pzKSiinrmLAYCTaNif9WCIdRVUEHHRpLfdgZYglKfcf5A13wMB0LhxfUAAAAAElFTkSuQmCCF0yQjsICAAA=</data>
+        <length>960</length>
+        <position>1</position>
+        <sys_attachment display_value="image" sys_id="794d41ccdbcaf7003fa45fa0cf9619d3">794d41ccdbcaf7003fa45fa0cf9619d3</sys_attachment>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-10 06:30:30</sys_created_on>
+        <sys_id>3d4d41ccdbcaf7003fa45fa0cf9619d3</sys_id>
+    </sys_attachment_doc>
+</record_update>

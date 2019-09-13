@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[app.controller('ParentCtrl', function($scope, $timeout, $compile) {
+	$scope.canRead = g_user.hasRole('x_dchhl_eevent_enr.HR_Admin') || g_user.hasRole('x_dchhl_eevent_enr.Admin');
+	
+	var loading = document.getElementById("dch-loading");
+	var main_body = document.getElementById("main");
+	
+	var request_id = window.location.search.split('=')[1];
+	if(!!!request_id){
+		$scope.hasError = true;
+	}else{
+		$scope.hasError = false;
+	}
+
+	$scope.request = {};
+	$scope.request_id = request_id;
+
+	var request_ga = new GlideAjax('DCH_Event_Util');
+	request_ga.addParam('sysparm_name', 'getRequest');
+	request_ga.addParam('sysparm_requestID', request_id);
+
+	request_ga.getXML(function(serverResponse) {
+		var result = serverResponse.responseXML.getElementsByTagName('result');
+		var res = JSON.parse(result[0].getAttribute('res'));
+
+		$scope.request = res;
+		$scope.$apply();
+		document.title = 'On-site Registration';
+		console.log('getRequest',res);
+		loading.style.display = "none";
+		main_body.style.display = "block";
+	});
+
+
+});]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_dchhl_eevent_enr_event_result.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:macro_invoke macro="x_dchhl_eevent_enr_form_header" />
+	<style>
+		html {
+			font-size: 16px;
+		}
+		body {
+			background-color: #f8f9fa !important;
+		}
+		.container {
+			max-width: 700px;
+			margin-bottom: 5px;
+			padding-top: 15px;
+			background-color: #ffffff;
+		}
+		label {
+			margin-bottom: 4px;
+		}
+		.borderless td, .borderless th {
+			border: none !important;
+		}
+		.borderless tr td:nth-of-type(1) {
+			padding-left: 0;
+			width: 20%;
+		}
+		
+		@media only screen and (max-width: 600px) {
+			.borderless tr td:nth-of-type(1) {
+				width: 35%;
+			}
+		}
+	</style>
+	<div ng-app="myApp">
+		<div class="container" ng-controller="ParentCtrl">
+			<div style="padding: 10px;">
+				<a href="https://www.dch.com.hk" target="_blank"><img class="img img-responsive" src="eEvent_logo_dch.png" width="250" height="50" border="0" /></a>
+			</div>
+			
+			<div class="jumbotron text-center bg-danger text-white" ng-if="hasError">
+				<h1>Invalid URL</h1>
+			</div>
+			<div class="jumbotron text-center bg-danger text-white" ng-if="!hasError &amp;&amp; !canRead">
+				<h1>Permission Denied</h1>
+			</div>
+			
+			<div ng-if="!hasError">
+				<div class="py-4 text-center">
+					<h2>Register Information</h2>
+				</div>
+				<div class="container">
+					<h4>{{request.name}}</h4>
+					<table class="table borderless" style="width: 100%;">
+						<tbody>
+							<tr>
+								<td>Date: </td>
+								<td>{{request.date}}</td>
+							</tr>
+							<tr>
+								<td>Time: </td>
+								<td>{{request.time}}</td>
+							</tr>
+							<tr>
+								<td>Venue: </td>
+								<td>{{request.venue}}</td>
+							</tr>
+							<tr ng-if="request.speaker">
+								<td>Speaker: </td>
+								<td>{{request.speaker}}</td>
+							</tr>
+							<tr>
+								<td>Language: </td>
+								<td>{{request.language}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+					<h4>Register</h4>
+					<table class="table borderless" style="width: 100%;">
+						<tbody>
+							<tr>
+								<td>First Name: </td>
+								<td>{{request.first_name}}</td>
+							</tr>
+							<tr>
+								<td>Last Name: </td>
+								<td>{{request.last_name}}</td>
+							</tr>
+							<tr>
+								<td>Email: </td>
+								<td>{{request.email}}</td>
+							</tr>
+							<tr>
+								<td>Phone: </td>
+								<td>{{request.phone}}</td>
+							</tr>
+							<tr>
+								<td>Comapny: </td>
+								<td>{{request.company}}</td>
+							</tr>
+							<tr>
+								<td>Title: </td>
+								<td>{{request.title}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</j:jelly>]]></html>
+        <name>event_result</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-12 01:37:39</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>496dd6e0dbc673000511e5951b961927</sys_id>
+        <sys_mod_count>31</sys_mod_count>
+        <sys_name>event_result</sys_name>
+        <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+        <sys_update_name>sys_ui_page_496dd6e0dbc673000511e5951b961927</sys_update_name>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-07-23 06:15:21</sys_updated_on>
+    </sys_ui_page>
+</record_update>

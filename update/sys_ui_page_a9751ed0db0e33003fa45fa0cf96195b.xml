@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[app.controller('ParentCtrl', function($scope, $timeout, $compile) {
+	// var event_id = getParmVal('event');
+	var invitation_id = getParmVal('invitation');
+	$scope.request = {};
+	$scope.validation = {};
+	// $scope.request.event_id = event_id;
+	$scope.request.invitation_id = invitation_id;
+	
+	$scope.clicked_submit = false;
+	$scope.haveTopImage = false;
+	$scope.haveBottomImage = false;
+	
+	var loading = document.getElementById("dch-loading");
+	var main_body = document.getElementById("main");
+	
+	var email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	
+	if(!!!invitation_id){
+		$scope.hasError = true;
+		loading.style.display = "none";
+		main_body.style.display = "block";
+	} else {
+		$scope.hasError = false;
+		var event_ga = new GlideAjax('DCH_Event_Util');
+		event_ga.addParam('sysparm_name', 'getEvent');
+		// event_ga.addParam('sysparm_eventID', event_id);
+		event_ga.addParam('sysparm_invitationID', invitation_id);
+
+		event_ga.getXML(function(serverResponse) {
+			var result = serverResponse.responseXML.getElementsByTagName('result');
+			var res = JSON.parse(result[0].getAttribute('res'));
+
+			$scope.event = res;
+			
+			if(!!$scope.event.image_top) {
+				var image_top_gr = new GlideRecord('sys_attachment');
+				$scope.haveTopImage = image_top_gr.get($scope.event.image_top);
+			}
+			if(!!$scope.event.image_bottom) {
+				var image_bottom_gr = new GlideRecord('sys_attachment');
+				$scope.haveBottomImage = image_bottom_gr.get($scope.event.image_bottom);
+			}
+			
+			$scope.$apply();
+			loading.style.display = "none";
+			main_body.style.display = "block";
+			document.title = $scope.event.name + ' Registration';
+		});
+	}
+	
+	console.log('$scope: ', $scope);
+	
+	
+	$scope.register = function(){
+		createRequest();
+	};
+	
+	$scope.validateInput = function(field) {
+		if($scope.clicked_submit) {
+			if(field == "email") {
+				if(email_regex.test($scope["request"][field])) {
+					$scope["validation"]["email_invalid"] = false;
+				} else {
+					$scope["validation"]["email_invalid"] = true;
+				}
+			}
+			
+			if(!!$scope["request"][field]) {
+				$scope["validation"][field] = true;
+			} else {
+				$scope["validation"][field] = false;
+			}
+		}
+	};
+	
+	function getParmVal(name){
+		var url = document.URL.parseQuery();
+		if(url[name]){
+			return decodeURI(url[name]);
+		}
+		else{
+			return;
+		}
+	}
+	
+	function createRequest(){
+		$scope.clicked_submit = true;
+		if(!!$scope.request.first_name && !!$scope.request.last_name && !!$scope.request.email && !!$scope.request.company && !!$scope.request.title && email_regex.test($scope.request.email)) {
+			var regButton = document.getElementById("regButton");
+			regButton.disabled = true;
+			loading.style.display = "block";
+			var request_ga = new GlideAjax('DCH_Event_Util');
+			request_ga.addParam('sysparm_name', 'createRequest');
+			request_ga.addParam('sysparm_requestData', JSON.stringify($scope.request));
+			
+			request_ga.getXML(function(serverResponse) {
+				var result = serverResponse.responseXML.getElementsByTagName('result');
+				var res = result[0].getAttribute('res');
+
+				//generateQRCode(res);
+				// console.log('createRequest',res);
+				window.location.href = 'x_dchhl_eevent_enr_event_enroll_sucess.do';
+			});
+			
+		} else {
+			if(!$scope.request.title) {
+				$scope.validation.title = false;
+				document.getElementById('title').focus();
+			}
+			if(!$scope.request.company) {
+				$scope.validation.company = false;
+				document.getElementById('company').focus();
+			}
+			if(!$scope.request.email) {
+				$scope.validation.email = false;
+				document.getElementById('email').focus();
+			}else if(!email_regex.test($scope.request.email)) {
+				$scope.validation.email_invalid = true;
+				$scope.validation.email = true;
+				document.getElementById('email').focus();
+			}
+			if(!!$scope.request.phone) {
+				$scope.validation.phone = true;
+			}
+			if(!$scope.request.last_name) {
+				$scope.validation.last_name = false;
+				document.getElementById('last_name').focus();
+			}
+			if(!$scope.request.first_name) {
+				$scope.validation.first_name = false;
+				document.getElementById('first_name').focus();
+			}
+			// alert('Please provide all mandatory information');
+			return false;
+		}
+	}
+
+	function updateQRCode(id,qrcode){
+		console.log('updateQRCode',qrcode);
+		var request_ga = new GlideAjax('DCH_Event_Util');
+		request_ga.addParam('sysparm_name', 'updateRequest');
+		request_ga.addParam('sysparm_qrcode', qrcode);
+		request_ga.addParam('sysparm_requestID', id);
+
+		request_ga.getXML(function(serverResponse) {
+			var result = serverResponse.responseXML.getElementsByTagName('result');
+			var res = result[0].getAttribute('res');
+
+			alert(res);
+			// console.log('updateQRCode');
+		});
+	}
+
+	function generateQRCode(id){
+		console.log('generateQRCode',id);
+		var qrcode = new QRCode(document.getElementById("qrcode"),{
+			width: 100,
+			height: 100
+		});
+		qrcode.makeCode(window.location.origin+"/x_dchhl_eevent_enr_event_result.do?eid="+id);
+		setTimeout(function() {
+			// onsole.log('generateQRCode setTimeout',id);
+			updateQRCode(id,document.getElementById("qrcode").children[1].getAttribute('src'));
+		},1000);
+	}
+
+});]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_dchhl_eevent_enr_event_enrollment.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:macro_invoke macro="x_dchhl_eevent_enr_form_header" />
+	<style>
+		html {
+			font-size: 16px;
+		}
+		body {
+			background-color: #f8f9fa !important;
+		}
+		.container {
+			max-width: 700px;
+			margin-bottom: 5px;
+			padding-top: 15px;
+			background-color: #ffffff;
+		}
+		label {
+			margin-bottom: 4px;
+		}
+		.borderless td, .borderless th {
+			border: none !important;
+		}
+		.borderless tr td:nth-of-type(1) {
+			padding-left: 0;
+			width: 20%;
+		}
+		
+		@media only screen and (max-width: 600px) {
+			.borderless tr td:nth-of-type(1) {
+				width: 35%;
+			}
+		}
+	</style>
+	<div ng-app="myApp">
+		<div id="main" style="display: none;" class="container" ng-controller="ParentCtrl">
+			<div style="padding: 10px;">
+				<a href="https://www.dch.com.hk" target="_blank"><img class="img img-responsive" src="eEvent_logo_dch.png" width="250" height="50" border="0" /></a>
+			</div>
+			<div class="jumbotron text-center bg-danger text-white" ng-if="hasError">
+				<h1>Invaild URL</h1>
+			</div>
+			<div class="jumbotron text-center bg-info text-white" ng-if="!(event.canReg || hasError)">
+				<h1>Registration period has ended</h1>
+			</div>
+			<div ng-if="!hasError &amp;&amp; event.canReg">
+				<div ng-if="haveTopImage">
+					<img class="img img-responsive" src="{{event.image_top}}.iix" border="0" />
+				</div>
+				<div class="py-3 text-center">
+					<h2>Registration Form</h2>
+				</div>
+				<div class="container">
+					<h4>{{event.name}}</h4>
+					<table class="table borderless" style="width: 100%;">
+						<tbody>
+							<tr>
+								<td>Date: </td>
+								<td>{{event.date}}</td>
+							</tr>
+							<tr>
+								<td>Time: </td>
+								<td>{{event.time}}</td>
+							</tr>
+							<tr>
+								<td>Venue: </td>
+								<td>{{event.venue}}</td>
+							</tr>
+							<tr ng-if="event.speaker">
+								<td>Speaker: </td>
+								<td>{{event.speaker}}</td>
+							</tr>
+							<tr>
+								<td>Language: </td>
+								<td>{{event.language}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<br />
+					<h4>Register Now</h4>
+					<form>
+						<div class="form-row">
+							<div class="form-group col-12">
+								<label for="first_name">First Name<span class="mandatory-label">*</span></label>
+								<input type="text" class="form-control" id="first_name" ng-model="request.first_name" ng-class="{'is-invalid': validation.first_name == false, 'is-valid': validation.first_name == true}" ng-change="validateInput('first_name')" required="required" />
+								<!-- <div class="invalid-feedback" ng-if="validation.first_name == false">Please provide your first name.</div> -->
+								<div class="invalid-feedback" ng-if="validation.first_name == false">Mandatory</div>
+							</div>
+							<div class="form-group col-12">
+								<label for="last_name">Last Name<span class="mandatory-label">*</span></label>
+								<input type="text" class="form-control" id="last_name" ng-model="request.last_name" ng-class="{'is-invalid': validation.last_name == false, 'is-valid': validation.last_name == true}" ng-change="validateInput('last_name')" required="required" />
+								<!-- <div class="invalid-feedback" ng-if="validation.last_name == false">Please provide your last name.</div> -->
+								<div class="invalid-feedback" ng-if="validation.last_name == false">Mandatory</div>
+							</div>
+							<div class="form-group col-12">
+								<label for="email">Email<span class="mandatory-label">*</span></label>
+								<input type="text" class="form-control" id="email" ng-model="request.email" ng-class="{'is-invalid': validation.email == false || validation.email_invalid == true, 'is-valid': validation.email == true &amp;&amp; validation.email_invalid == false}" ng-keyup="validateInput('email')" required="required" />
+<!-- 								<div class="invalid-feedback" ng-if="validation.email == false">Please provide a valid email address.</div> -->
+								<div class="invalid-feedback" ng-if="validation.email == true &amp;&amp; validation.email_invalid">Invalid value</div>
+								<div class="invalid-feedback" ng-if="validation.email == false">Mandatory</div>
+							</div>
+							<div class="form-group col-12">
+								<label for="phone">Phone</label>
+								<input type="text" class="form-control" id="phone" ng-model="request.phone" ng-class="{'is-valid': validation.phone == true}" ng-keyup="validateInput('phone')" minlength="8" />
+							</div>
+							<div class="form-group col-12">
+								<label for="company">Company<span class="mandatory-label">*</span></label>
+								<input type="text" class="form-control" id="company" ng-model="request.company" ng-class="{'is-invalid': validation.company == false, 'is-valid': validation.company == true}" ng-change="validateInput('company')" required="required" />
+								<!-- <div class="invalid-feedback" ng-if="validation.company == false">Please provide your company.</div> -->
+								<div class="invalid-feedback" ng-if="validation.company == false">Mandatory</div>
+							</div>
+							<div class="form-group col-12">
+								<label for="title">Title<span class="mandatory-label">*</span></label>
+								<input type="text" class="form-control" id="title" ng-model="request.title" ng-class="{'is-invalid': validation.title == false, 'is-valid': validation.title == true}" ng-change="validateInput('title')" required="required" />
+								<!-- <div class="invalid-feedback" ng-if="validation.title == false">Please provide your title.</div> -->
+								<div class="invalid-feedback" ng-if="validation.title == false">Mandatory</div>
+							</div>
+							<div class="form-group col-12">
+								<button id="regButton" type="button" class="btn text-white" ng-click="register()" style="background-color: #A61423;">Register</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div id="qrcode"></div>
+				<div ng-if="haveBottomImage">
+					<img class="img img-responsive" src="{{event.image_bottom}}.iix" border="0" />
+				</div>
+			</div>
+		</div>
+	</div>
+</j:jelly>]]></html>
+        <name>event_enrollment</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-11 06:26:36</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>a9751ed0db0e33003fa45fa0cf96195b</sys_id>
+        <sys_mod_count>219</sys_mod_count>
+        <sys_name>event_enrollment</sys_name>
+        <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+        <sys_update_name>sys_ui_page_a9751ed0db0e33003fa45fa0cf96195b</sys_update_name>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-07-23 06:14:27</sys_updated_on>
+    </sys_ui_page>
+</record_update>

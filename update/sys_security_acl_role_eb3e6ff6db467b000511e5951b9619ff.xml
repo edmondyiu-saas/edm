@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-19 07:17:03</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>eb3e6ff6db467b000511e5951b9619ff</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_dchhl_eevent_enr_event_invitation.x_dchhl_eevent_enr.Admin</sys_name>
+        <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+        <sys_security_acl display_value="x_dchhl_eevent_enr_event_invitation">d33e6ff6db467b000511e5951b9619b2</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_eb3e6ff6db467b000511e5951b9619ff</sys_update_name>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-06-19 07:17:03</sys_updated_on>
+        <sys_user_role display_value="x_dchhl_eevent_enr.Admin" name="x_dchhl_eevent_enr.Admin">722848fedbf577000511e5951b961955</sys_user_role>
+        <transaction_id/>
+    </sys_security_acl_role>
+</record_update>

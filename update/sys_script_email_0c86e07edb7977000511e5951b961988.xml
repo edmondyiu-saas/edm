@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_email">
+    <sys_script_email action="INSERT_OR_UPDATE">
+        <name>eEvent_send_invitation</name>
+        <new_lines_to_html>true</new_lines_to_html>
+        <script><![CDATA[(function runMailScript(/* GlideRecord */ current, /* TemplatePrinter */ template,
+          /* Optional EmailOutbound */ email, /* Optional GlideRecord */ email_action,
+          /* Optional GlideRecord */ event) {
+
+          // Add your code here
+	var reg_url = 'x_dchhl_eevent_enr_event_enrollment.do?invitation=' + current.getUniqueValue();
+	
+	var haveTopImage = false;
+	if(!!current.image_top) {
+		var image_top_gr = new GlideRecord('sys_attachment');
+		haveTopImage = image_top_gr.get(current.image_top);
+	}
+	
+	var haveBottomImage = false;
+	if(!!current.image_bottom) {
+		var image_bottom_gr = new GlideRecord('sys_attachment');
+		haveBottomImage = image_bottom_gr.get(current.image_bottom);
+	}
+	
+	var event_gr = new GlideRecord('x_dchhl_eevent_enr_event');
+	event_gr.get(current.event_ref);
+		
+	var info = {};
+	
+	info.name = event_gr.name;
+	info.venue = event_gr.venue;
+	info.speaker = event_gr.speaker;
+	info.language = event_gr.language;
+	info.introduction = event_gr.introduction;
+	info.closing = event_gr.closing;
+	
+	var date = new GlideDateTime(event_gr.date);
+	var map_month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+	var date_month = map_month[parseInt(date.getMonthLocalTime()) - 1];
+	var map_dayOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+	var date_dayOfWeek = map_dayOfWeek[parseInt(date.getDayOfWeekLocalTime()) - 1];
+	var date_day = parseInt(date.getDayOfMonthLocalTime());
+	var date_year = parseInt(date.getYearLocalTime());
+	info.date = date_month + ' ' + date_day + ', ' + date_year + ' (' + date_dayOfWeek + ')';
+	
+	var registration_deadline = new GlideDateTime(event_gr.registration_deadline);
+	var registration_deadline_month = map_month[parseInt(registration_deadline.getMonthLocalTime()) - 1];
+	var registration_deadline_dayOfWeek = map_dayOfWeek[parseInt(registration_deadline.getDayOfWeekLocalTime()) - 1];
+	var registration_deadline_day = parseInt(registration_deadline.getDayOfMonthLocalTime());
+	var registration_deadline_year = parseInt(registration_deadline.getYearLocalTime());
+	info.registration_deadline = registration_deadline_month + ' ' + registration_deadline_day + ', ' + registration_deadline_year + ' (' + registration_deadline_dayOfWeek + ')';
+	
+	var start_time_gdt = new GlideDateTime(event_gr.start_time);
+	var start_time = start_time_gdt.getLocalTime().getByFormat('h:mm');
+	var start_time_am_pm = (parseInt(start_time_gdt.getLocalTime().getByFormat('H'))) < 12 ? 'am' : 'pm';
+	var end_time_gdt = new GlideDateTime(event_gr.end_time);
+	var end_time = end_time_gdt.getLocalTime().getByFormat('h:mm');
+	var end_time_am_pm = (parseInt(end_time_gdt.getLocalTime().getByFormat('H'))) < 12 ? 'am' : 'pm';
+	info.time = start_time + start_time_am_pm + ' - ' + end_time + end_time_am_pm;
+	
+	email.setFrom('DCH Event Invitation');
+	
+	email.setSubject(current.subject.toString());
+	
+	
+	// template.print('<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden;">You\'re invited to join ' + info.name + '</div>');
+	template.print('<center style="width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%;">');
+		template.print('<table style="background-color:#f8f8f8;" width="100%" align="center">');
+			template.print('<tbody>');
+				template.print('<tr>');
+					template.print('<td style="padding:15px;" align="center">');
+						template.print('<table style="background-color:#ffffff; width:600px;" align="center">');
+							template.print('<tbody>');
+								template.print('<tr>');
+									template.print('<td style="border:1px solid #e8e8e8; font-family:Helvetica, Arial, sans-serif; color:#000000;">');
+										// Top Image
+										if(haveTopImage) {
+											template.print('<div id="Top-Image">');
+											template.print('<img src="' + current.image_top + '.iix" border="0" />');
+											template.print('</div>');
+											template.print('<br />');
+										}
+										template.print('<table style="border-collapse:collapse; background-color:#ffffff;" width="100%" align="center">');
+											template.print('<tbody>');
+												template.print('<tr>');
+													template.print('<td style="padding:10px 20px 20px 20px;">');
+														template.print('<table style="background-color:#ffffff;" width="100%" align="center">');
+															template.print('<tbody>');
+																template.print('<tr>');
+																	template.print('<td style="padding:0px; margin:0px; display:block; font-family: Helvetica, Arial, sans-serif; font-size: 12pt; line-height: 24px;" align="left">');
+	
+																	// Logo
+																	/*
+																	template.print('<div id="Logo">');
+																		template.print('<a href="https://www.dch.com.hk"><img src="eEvent_logo_dch.png" width="250" height="50" border="0" /></a>');
+																	template.print('</div>');
+																	template.print('<br />');
+																	*/
+	
+																	// Heading
+																	/*
+																	template.print('<div id="Heading">');
+																		template.print('<p style="text-align: center;"><span style="font-size: 20px;"><strong><span style="font-size: 22px;">' + info.name + ' Invitation</span><span style="font-size: 22px;"></span></strong></span></p>');
+																	template.print('</div>');
+																	*/
+	
+																	template.print('<div id="Intro">');
+																		template.print('<table width="100%">');
+																			template.print('<tbody>');
+																				template.print('<tr>');
+																					template.print('<td style="font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 24px; padding: 10px 0px 10px 0px;" align="left"><p>Dear ' + current.recipient_name.toString() + ', </p></td>');
+																				template.print('</tr>');
+																				if(!!info.introduction) {
+																					template.print('<tr>');
+																						template.print('<td style="font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 24px; padding: 10px 0px 10px 0px;" align="left">');
+																							template.print(info.introduction);
+																						template.print('</td>');
+																					template.print('</tr>');
+																				}
+																			template.print('</tbody>');
+																		template.print('</table>');
+																	template.print('</div>');
+
+																	// Event Details
+																	template.print('<div id="Event-Details">');
+																		template.print('<table width="100%">');
+																			template.print('<tbody>');
+																				template.print('<tr>');
+																					template.print('<td style="padding: 0px; background-color: #e8e8e8;" valign="top">');
+																						template.print('<table width="100%" height="100%" align="left">');
+																							template.print('<tbody>');
+																								template.print('<tr>');
+																									template.print('<td style="padding: 10px;" valign="middle">');
+																										template.print('<table width="100%">');
+																											template.print('<tbody>');
+																												template.print('<tr valign="top">');
+																													template.print('<td style="padding: 0px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left"><strong>Date: </strong></td>');
+																													template.print('<td style="padding-left: 10px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left">' + info.date + '</td>');
+																												template.print('</tr>');
+																												template.print('<tr valign="top">');
+																													template.print('<td style="padding: 0px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left"><strong>Time: </strong></td>');
+																													template.print('<td style="padding-left: 10px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left">' + info.time + '</td>');
+																												template.print('</tr>');
+																												template.print('<tr valign="top">');
+																													template.print('<td style="padding: 0px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left"><strong>Venue: </strong></td>');
+																													template.print('<td style="padding-left: 10px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left">' + info.venue + '</td>');
+																												template.print('</tr>');
+																												
+																												if(!!info.speaker) {
+																													template.print('<tr valign="top">');
+																														template.print('<td style="padding: 0px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left"><strong>Speaker: </strong></td>');
+																														template.print('<td style="padding-left: 10px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left">' + info.speaker + '</td>');
+																													template.print('</tr>');
+																												}
+																												
+																												template.print('<tr valign="top">');
+																													template.print('<td style="padding: 0px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left"><strong>Language: </strong></td>');
+																													template.print('<td style="padding-left: 10px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left">' + info.language + '</td>');
+																												template.print('</tr>');
+																												
+																												template.print('<tr valign="top">');
+																													template.print('<td style="padding: 0px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left"><strong>Registration Deadline: </strong></td>');
+																													template.print('<td style="padding-left: 10px; font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 20px;" align="left">' + info.registration_deadline + '</td>');
+																												template.print('</tr>');
+																											template.print('</tbody>');
+																										template.print('</table>');
+																										template.print('<br />');
+																										template.print('<table width="25%">');
+																											template.print('<tbody>');
+																												template.print('<tr>');
+																													template.print('<td bgcolor="#a61423" align="center" valign="middle"><a href="' + reg_url + '" target="_blank" style="weight: 100%; height: 100%; font-size: 12pt; font-weight: bold; font-family: Helvetica, Arial, sans-serif; color: #ffffff; text-decoration: none; padding: 10px 15px 10px 15px; border: 1px solid #a61423; display: inline-block;">Register Here</a></td>');
+																												template.print('</tr>');
+																											template.print('</tbody>');
+																										template.print('</table>');
+																									template.print('</td>');
+																								template.print('</tr>');
+																							template.print('</tbody>');
+																						template.print('</table>');
+																					template.print('</td>');
+																				template.print('</tr>');
+																			template.print('</tbody>');
+																		template.print('</table>');
+																	template.print('</div>');
+	
+																	if(!!info.closing) {
+																		template.print('<div id="Closing">');
+																			template.print('<table width="100%">');
+																				template.print('<tbody>');
+																					template.print('<tr>');
+																						template.print('<td style="font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 24px; padding: 10px 0px 10px 0px;" align="left">');
+																							template.print(info.closing);
+																						template.print('</td>');
+																					template.print('</tr>');
+																				template.print('</tbody>');
+																			template.print('</table>');
+																		template.print('</div>');
+																	}
+
+																	template.print('<div id="Signature-Block">');
+																		template.print('<table width="100%">');
+																			template.print('<tbody>');
+																				template.print('<tr>');
+																					template.print('<td style="font-family: Helvetica, Arial, sans-serif; color: #000000; font-size: 12pt; line-height: 24px; padding: 10px 0px 10px 0px;" align="left"><p>Best regards,<br /><br /><strong>' + current.respective_bu_head_name + '</strong><br /><br />' + current.respective_bu_head_position + '<br />Dah Chong Hong Holdings Limited<br /></p></td>');
+																				template.print('</tr>');
+																			template.print('</tbody>');
+																		template.print('</table>');
+																	template.print('</div>');
+
+																	// Social Media Container
+																	/*
+																	template.print('<div id="Social-Media">');
+																		template.print('<table width="100%" cellspacing="0" cellpadding="0" border="0">');
+																			template.print('<tbody>');
+																				template.print('<tr>');
+																					template.print('<td class="social-container" style="padding: 0px; font-family: helvetica, arial, sans-serif; line-height: 24px;" width="100%" align="right"><span class="socialPod"><a href="https://www.facebook.com/dahchonghongholdings/"><img src="eEvent_icon_facebook.png" alt="Facebook" width="25" height="25" border="0" /></a></span>&nbsp;&nbsp; <span class="socialPod"><a href="https://www.instagram.com/dahchonghonghk/"><img src="eEvent_icon_ig.png" alt="Instagram" width="25" height="25" border="0" /></a></span>&nbsp;&nbsp; <span class="socialPod"><a href="https://www.linkedin.com/company/dah-chong-hong-limited"><img src="eEvent_icon_linkedin.png" alt="LinkedIn" width="25" height="25" border="0" /></a></span>&nbsp;&nbsp; <span class="socialPod"><a href="https://www.youtube.com/channel/UCloodpAabmSUeq5xn9jAjIA"><img src="eEvent_icon_youtube.png" alt="YouTube" width="25" height="25" border="0" /></a></span></td>');
+																				template.print('</tr>');
+																			template.print('</tbody>');
+																		template.print('</table>');
+																	template.print('</div>');
+																	*/
+
+																	template.print('</td>');
+																template.print('</tr>');
+															template.print('</tbody>');
+														template.print('</table>');
+													template.print('</td>');
+												template.print('</tr>');
+											template.print('</tbody>');
+										template.print('</table>');
+									// Bottom Image
+									if(haveBottomImage) {
+										template.print('<div id="Bottom-Image">');
+										template.print('<img src="' + current.image_bottom + '.iix" border="0" />');
+										template.print('</div>');
+										template.print('<br />');
+									}
+									template.print('</td>');
+								template.print('</tr>');
+							template.print('</tbody>');
+						template.print('</table>');
+					template.print('</td>');
+				template.print('</tr>');
+			template.print('</tbody>');
+		template.print('</table>');
+	template.print('</center>');
+})(current, template, email, email_action, event);]]></script>
+        <sys_class_name>sys_script_email</sys_class_name>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-06 06:28:54</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>0c86e07edb7977000511e5951b961988</sys_id>
+        <sys_mod_count>187</sys_mod_count>
+        <sys_name>eEvent_send_invitation</sys_name>
+        <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+        <sys_update_name>sys_script_email_0c86e07edb7977000511e5951b961988</sys_update_name>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-07-23 03:06:28</sys_updated_on>
+    </sys_script_email>
+</record_update>

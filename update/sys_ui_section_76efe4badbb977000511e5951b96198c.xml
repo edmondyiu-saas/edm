@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section caption="" section_id="76efe4badbb977000511e5951b96198c" sys_domain="global" table="x_dchhl_eevent_enr_enrollment" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>first_name</element>
+            <position>0</position>
+            <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+            <sys_created_on>2019-06-06 07:09:50</sys_created_on>
+            <sys_id>36efe4badbb977000511e5951b961992</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>andy.lau@laputatech.com</sys_updated_by>
+            <sys_updated_on>2019-06-06 07:09:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>last_name</element>
+            <position>1</position>
+            <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+            <sys_created_on>2019-06-06 07:09:50</sys_created_on>
+            <sys_id>baefe4badbb977000511e5951b961992</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>andy.lau@laputatech.com</sys_updated_by>
+            <sys_updated_on>2019-06-06 07:09:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>qr_code_source</element>
+            <position>2</position>
+            <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+            <sys_created_on>2019-06-06 07:09:50</sys_created_on>
+            <sys_id>3eefe4badbb977000511e5951b961992</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>andy.lau@laputatech.com</sys_updated_by>
+            <sys_updated_on>2019-06-06 07:09:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>event</element>
+            <position>3</position>
+            <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+            <sys_created_on>2019-06-06 07:09:50</sys_created_on>
+            <sys_id>beefe4badbb977000511e5951b961992</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>andy.lau@laputatech.com</sys_updated_by>
+            <sys_updated_on>2019-06-06 07:09:50</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>email</element>
+            <position>4</position>
+            <sys_created_by>WingHo.Lin</sys_created_by>
+            <sys_created_on>2019-06-06 07:25:04</sys_created_on>
+            <sys_id>4e6334bedbb977000511e5951b96193f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>WingHo.Lin</sys_updated_by>
+            <sys_updated_on>2019-06-06 07:25:04</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>phone</element>
+            <position>5</position>
+            <sys_created_by>WingHo.Lin</sys_created_by>
+            <sys_created_on>2019-06-06 08:19:28</sys_created_on>
+            <sys_id>f6dff83edbf977000511e5951b961981</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>WingHo.Lin</sys_updated_by>
+            <sys_updated_on>2019-06-06 08:19:28</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>department</element>
+            <position>6</position>
+            <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+            <sys_created_on>2019-06-06 08:27:31</sys_created_on>
+            <sys_id>e0b145fedbf977000511e5951b961925</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>andy.lau@laputatech.com</sys_updated_by>
+            <sys_updated_on>2019-06-06 08:27:31</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>title</element>
+            <position>7</position>
+            <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+            <sys_created_on>2019-06-06 08:27:55</sys_created_on>
+            <sys_id>36c1c1fedbf977000511e5951b9619f1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>andy.lau@laputatech.com</sys_updated_by>
+            <sys_updated_on>2019-06-06 08:27:55</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>company</element>
+            <position>8</position>
+            <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+            <sys_created_on>2019-06-06 08:28:25</sys_created_on>
+            <sys_id>bde149fedbf977000511e5951b9619b5</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>andy.lau@laputatech.com</sys_updated_by>
+            <sys_updated_on>2019-06-06 08:28:25</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>invitation</element>
+            <position>9</position>
+            <sys_created_by>WingHo.Lin</sys_created_by>
+            <sys_created_on>2019-06-20 03:21:00</sys_created_on>
+            <sys_id>67c10897dbc2bb000511e5951b9619a2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_dchhl_eevent_enr_enrollment" sys_domain="global" view="Default view">76efe4badbb977000511e5951b96198c</sys_ui_section>
+            <sys_updated_by>WingHo.Lin</sys_updated_by>
+            <sys_updated_on>2019-06-20 03:21:00</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_section action="INSERT_OR_UPDATE">
+            <caption/>
+            <header>false</header>
+            <name>x_dchhl_eevent_enr_enrollment</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+            <sys_created_on>2019-06-06 07:09:50</sys_created_on>
+            <sys_customer_update>false</sys_customer_update>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>76efe4badbb977000511e5951b96198c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_dchhl_eevent_enr_enrollment</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+            <sys_policy/>
+            <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+            <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+            <sys_update_name>sys_ui_section_76efe4badbb977000511e5951b96198c</sys_update_name>
+            <sys_updated_by>andy.lau@laputatech.com</sys_updated_by>
+            <sys_updated_on>2019-06-06 07:09:50</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+</record_update>

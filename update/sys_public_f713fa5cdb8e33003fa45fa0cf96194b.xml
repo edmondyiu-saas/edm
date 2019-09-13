@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_public">
+    <sys_public action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <page>x_dchhl_eevent_enr_event_enroll_sucess</page>
+        <sys_class_name>sys_public</sys_class_name>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-11 08:34:02</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>f713fa5cdb8e33003fa45fa0cf96194b</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_dchhl_eevent_enr_event_enroll_sucess</sys_name>
+        <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+        <sys_update_name>sys_public_f713fa5cdb8e33003fa45fa0cf96194b</sys_update_name>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-06-11 08:34:26</sys_updated_on>
+    </sys_public>
+</record_update>

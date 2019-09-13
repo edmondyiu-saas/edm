@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_dchhl_eevent_enr.DCH_Event_Util</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>DCH_Event_Util</name>
+        <script><![CDATA[var DCH_Event_Util = Class.create();
+DCH_Event_Util.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+	isPublic: function(){
+		return true;
+	},
+	getRequest: function(){
+		
+		var response = {};
+		var sys_id = this.getParameter('sysparm_requestID');
+		var enroll_gr = new GlideRecord('x_dchhl_eevent_enr_enrollment');
+		if(enroll_gr.get(sys_id)) {
+			response.name = enroll_gr.invitation.event_ref.name.toString();
+			response.venue = enroll_gr.invitation.event_ref.venue.toString();
+			response.speaker = enroll_gr.invitation.event_ref.speaker.toString();
+			response.language = enroll_gr.invitation.event_ref.language.toString();
+
+			var date = new GlideDateTime(enroll_gr.invitation.event_ref.date);
+			var map_month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+			var date_month = map_month[parseInt(date.getMonthLocalTime()) - 1];
+			var map_dayOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+			var date_dayOfWeek = map_dayOfWeek[parseInt(date.getDayOfWeekLocalTime()) - 1];
+			var date_day = parseInt(date.getDayOfMonthLocalTime());
+			var date_year = parseInt(date.getYearLocalTime());
+			response.date = date_month + ' ' + date_day + ', ' + date_year + ' (' + date_dayOfWeek + ')';
+			
+			var start_time_gdt = new GlideDateTime(enroll_gr.invitation.event_ref.start_time);
+			var start_time = start_time_gdt.getLocalTime().getByFormat('h:mm');
+			var start_time_am_pm = (parseInt(start_time_gdt.getLocalTime().getByFormat('H'))) < 12 ? 'am' : 'pm';
+			var end_time_gdt = new GlideDateTime(enroll_gr.invitation.event_ref.end_time);
+			var end_time = end_time_gdt.getLocalTime().getByFormat('h:mm');
+			var end_time_am_pm = (parseInt(end_time_gdt.getLocalTime().getByFormat('H'))) < 12 ? 'am' : 'pm';
+			response.time = start_time + start_time_am_pm + ' - ' + end_time + end_time_am_pm;
+
+			response.first_name = enroll_gr.first_name.toString();
+			response.last_name = enroll_gr.last_name.toString();
+			response.email = enroll_gr.email.toString();
+			response.phone = enroll_gr.phone.toString();
+			response.company = enroll_gr.company.toString();
+			response.title = enroll_gr.title.toString();
+			response.department = enroll_gr.department.toString();
+			response.event_name = enroll_gr.invitation.event_ref.name.toString();
+
+		}
+		var result = this.newItem('result');
+		result.setAttribute('res', JSON.stringify(response));
+	},
+	createRequest: function(){
+		var requestData = JSON.parse(this.getParameter('sysparm_requestData'));
+		var enroll_gr = new GlideRecord('x_dchhl_eevent_enr_enrollment');
+		
+		enroll_gr.invitation = requestData.invitation_id;
+		enroll_gr.last_name = requestData.last_name;
+		enroll_gr.first_name = requestData.first_name;
+		enroll_gr.phone = requestData.phone;
+		enroll_gr.company = requestData.company;
+		enroll_gr.department = requestData.department;
+		enroll_gr.title = requestData.title;
+		enroll_gr.email = requestData.email;
+		
+		var sys_id = enroll_gr.insert();
+		
+		enroll_gr.initialize();
+		enroll_gr.get(sys_id);
+		enroll_gr.qr_code_source = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://dchhkdev.service-now.com/x_dchhl_eevent_enr_event_result.do?eid='+sys_id;
+		
+		enroll_gr.update();
+		
+		gs.eventQueue('x_dchhl_eevent_enr.send_confirmation', enroll_gr, enroll_gr.email, null);
+		
+		var result = this.newItem('result');
+		result.setAttribute('res', sys_id);
+	},
+	updateRequest: function(){
+		var sys_id = this.getParameter('sysparm_requestID');
+		var qrcode = this.getParameter('sysparm_qrcode');
+		var enroll_gr = new GlideRecord('x_dchhl_eevent_enr_enrollment');
+		
+		enroll_gr.get(sys_id);
+		enroll_gr.qr_code_source = qrcode;
+		enroll_gr.update();
+		gs.eventQueue('x_dchhl_eevent_enr.send_confirmation', enroll_gr, enroll_gr.email, null);
+		
+		var result = this.newItem('result');
+		result.setAttribute('res', 'success');
+	},
+	getEvent: function(){
+		var response = {};
+		var invitation_id = this.getParameter('sysparm_invitationID');
+		var invitation_gr = new GlideRecord('x_dchhl_eevent_enr_event_invitation');
+		invitation_gr.get(invitation_id);
+		
+		/*
+		var event_id = this.getParameter('sysparm_eventID');
+		var event_gr = new GlideRecord('x_dchhl_eevent_enr_event');
+		event_gr.get(event_id);
+		*/
+		
+		response.invitation_id = invitation_id;
+		response.event_id = invitation_gr.event_ref.toString();
+		response.name = invitation_gr.event_ref.name.toString();
+		response.venue = invitation_gr.event_ref.venue.toString();
+		response.speaker = invitation_gr.event_ref.speaker.toString();
+		response.language = invitation_gr.event_ref.language.toString();
+		response.registration_deadline = invitation_gr.event_ref.registration_deadline.getDisplayValue();
+		response.image_top = invitation_gr.image_top.toString();
+		response.image_bottom = invitation_gr.image_bottom.toString();
+		var deadline = new GlideDateTime(invitation_gr.event_ref.registration_deadline.getDisplayValue());
+		var gdt = new GlideDateTime();
+		var now = new GlideDateTime(gdt.getDisplayValue());
+		if(now.compareTo(deadline) == 1) {
+			response.canReg = false;
+		} else {
+			response.canReg = true;
+		}
+		
+		var date = new GlideDateTime(invitation_gr.event_ref.date);
+		var map_month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+		var date_month = map_month[parseInt(date.getMonthLocalTime()) - 1];
+		var map_dayOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+		var date_dayOfWeek = map_dayOfWeek[parseInt(date.getDayOfWeekLocalTime()) - 1];
+		var date_day = parseInt(date.getDayOfMonthLocalTime());
+		var date_year = parseInt(date.getYearLocalTime());
+		response.date = date_month + ' ' + date_day + ', ' + date_year + ' (' + date_dayOfWeek + ')';
+
+		var start_time_gdt = new GlideDateTime(invitation_gr.event_ref.start_time);
+		var start_time = start_time_gdt.getLocalTime().getByFormat('h:mm');
+		var start_time_am_pm = (parseInt(start_time_gdt.getLocalTime().getByFormat('H'))) < 12 ? 'am' : 'pm';
+		var end_time_gdt = new GlideDateTime(invitation_gr.event_ref.end_time);
+		var end_time = end_time_gdt.getLocalTime().getByFormat('h:mm');
+		var end_time_am_pm = (parseInt(end_time_gdt.getLocalTime().getByFormat('H'))) < 12 ? 'am' : 'pm';
+		response.time = start_time + start_time_am_pm + ' - ' + end_time + end_time_am_pm;
+		
+		var result = this.newItem('result');
+		result.setAttribute('res', JSON.stringify(response));
+	},
+    type: 'DCH_Event_Util'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>andy.lau@laputatech.com</sys_created_by>
+        <sys_created_on>2019-06-06 06:00:22</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>cbcf58b6db7977000511e5951b961908</sys_id>
+        <sys_mod_count>42</sys_mod_count>
+        <sys_name>DCH_Event_Util</sys_name>
+        <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+        <sys_update_name>sys_script_include_cbcf58b6db7977000511e5951b961908</sys_update_name>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-07-23 04:37:21</sys_updated_on>
+    </sys_script_include>
+</record_update>

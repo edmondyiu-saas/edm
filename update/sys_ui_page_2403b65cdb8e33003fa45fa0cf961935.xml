@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[app.controller('ParentCtrl', function($scope, $timeout, $compile) {
+	var loading = document.getElementById("dch-loading");
+	var main_body = document.getElementById("main");
+	addLoadEvent( function() {  
+		loading.style.display = "none";
+		main_body.style.display = "block";
+		document.title = 'Successful Registration';
+	});
+});]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_dchhl_eevent_enr_event_enroll_sucess.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:macro_invoke macro="x_dchhl_eevent_enr_form_header" />
+	<style>
+		html {
+			font-size: 16px;
+		}
+		body {
+			background-color: #f8f9fa !important;
+		}
+		.container {
+			max-width: 700px;
+			margin-bottom: 5px;
+			padding-top: 15px;
+			background-color: #ffffff;
+		}
+	</style>
+	<div ng-app="myApp">
+		<div id="main" style="display: none;" class="container" ng-controller="ParentCtrl">
+			<div style="padding: 10px;">
+				<a href="https://www.dch.com.hk" target="_blank"><img class="img img-responsive" src="eEvent_logo_dch.png" width="250" height="50" border="0" /></a>
+			</div>
+			<div class="jumbotron text-center" style="background-color: inherit;">
+				<h1>Thank you!</h1>
+				<p style="margin-bottom: 5px;">Your registration form has been successfully submitted. </p>
+				<p style="margin-bottom: 5px;">A confirmation email has been sent to your email address. </p>
+			</div>
+		</div>
+	</div>
+</j:jelly>]]></html>
+        <name>event_enroll_sucess</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>WingHo.Lin</sys_created_by>
+        <sys_created_on>2019-06-11 08:33:53</sys_created_on>
+        <sys_customer_update>false</sys_customer_update>
+        <sys_id>2403b65cdb8e33003fa45fa0cf961935</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>event_enroll_sucess</sys_name>
+        <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
+        <sys_policy/>
+        <sys_replace_on_upgrade>false</sys_replace_on_upgrade>
+        <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
+        <sys_update_name>sys_ui_page_2403b65cdb8e33003fa45fa0cf961935</sys_update_name>
+        <sys_updated_by>WingHo.Lin</sys_updated_by>
+        <sys_updated_on>2019-07-23 06:15:30</sys_updated_on>
+    </sys_ui_page>
+</record_update>
