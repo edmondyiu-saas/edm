@@ -31,17 +31,18 @@
         <content_type>image/png</content_type>
         <encryption_context/>
         <file_name>image</file_name>
+        <hash/>
         <image_height>28</image_height>
         <image_width>28</image_width>
         <size_bytes>705</size_bytes>
         <size_compressed>728</size_compressed>
-        <state/>
+        <state>available</state>
         <sys_created_by>WingHo.Lin</sys_created_by>
         <sys_created_on>2019-06-10 06:29:53</sys_created_on>
         <sys_id>682dc98cdbcaf7003fa45fa0cf96190c</sys_id>
-        <sys_mod_count>2</sys_mod_count>
-        <sys_updated_by>WingHo.Lin</sys_updated_by>
-        <sys_updated_on>2019-06-10 06:29:53</sys_updated_on>
+        <sys_mod_count>3</sys_mod_count>
+        <sys_updated_by>guest</sys_updated_by>
+        <sys_updated_on>2019-11-19 07:23:12</sys_updated_on>
         <table_name>ZZ_YYdb_image</table_name>
         <table_sys_id>8efcd048db4af7003fa45fa0cf961940</table_sys_id>
     </sys_attachment>

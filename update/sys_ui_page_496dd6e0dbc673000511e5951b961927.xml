@@ -28,7 +28,7 @@
 		$scope.request = res;
 		$scope.$apply();
 		document.title = 'On-site Registration';
-		console.log('getRequest',res);
+		// console.log('getRequest',res);
 		loading.style.display = "none";
 		main_body.style.display = "block";
 	});
@@ -157,7 +157,7 @@
         <sys_created_on>2019-06-12 01:37:39</sys_created_on>
         <sys_customer_update>false</sys_customer_update>
         <sys_id>496dd6e0dbc673000511e5951b961927</sys_id>
-        <sys_mod_count>31</sys_mod_count>
+        <sys_mod_count>32</sys_mod_count>
         <sys_name>event_result</sys_name>
         <sys_package display_value="eEvent Enrollment" source="x_dchhl_eevent_enr">f9350c3edbf577000511e5951b961969</sys_package>
         <sys_policy/>
@@ -165,6 +165,6 @@
         <sys_scope display_value="eEvent Enrollment">f9350c3edbf577000511e5951b961969</sys_scope>
         <sys_update_name>sys_ui_page_496dd6e0dbc673000511e5951b961927</sys_update_name>
         <sys_updated_by>WingHo.Lin</sys_updated_by>
-        <sys_updated_on>2019-07-23 06:15:21</sys_updated_on>
+        <sys_updated_on>2019-12-30 01:58:59</sys_updated_on>
     </sys_ui_page>
 </record_update>
